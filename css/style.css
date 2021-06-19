@@ -1,0 +1,52 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+body {
+  margin: 0;
+}
+
+#map {
+  align-items: center;
+}
+
+h1 {
+  text-align: center;
+  font-size: 60px;
+  font-family: "Lato";
+  font-weight: 300;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 0;
+  color: rgb(80, 80, 80);
+  line-height: 1;
+}
+
+.country-name {
+  font-family: "Lato";
+  font-size: 13px;
+  fill: rgb(80, 80, 80);
+  stroke: "white";
+}
+
+#geo-name {
+  font-family: "Lato";
+  color: rgb(104, 104, 104);
+  margin: 0;
+  margin-top: 5px;
+  padding-top: 0;
+  padding-bottom: 0px;
+  font-size: 20px;
+  line-height: 0.3;
+  font-weight: 400;
+}
+
+.figures {
+  font-family: "Lato";
+  color: rgb(104, 104, 104);
+  padding-top: 2px;
+  line-height: 1;
+  font-size: 15px;
+  font-weight: 300;
+  padding-bottom: 1px;
+  margin-bottom: 0;
+  margin-top: 1;
+}
