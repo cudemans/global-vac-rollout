@@ -47,8 +47,9 @@ async function drawMap() {
 
     // Define wrapper
     const wrapper = d3.select("#map").append("svg")
-        .attr("width", dimensions.width)
-        .attr("height", dimensions.height)
+        // .attr("width", dimensions.width)
+        // .attr("height", dimensions.height)
+        .attr("viewBox", `0 0 ${dimensions.boundedWidth} ${dimensions.boundedHeight}`)
 
     // Define bounds
     const bounds = wrapper.append("g")
