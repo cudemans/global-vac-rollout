@@ -28,9 +28,9 @@ async function drawMap() {
     const width = window.innerWidth 
     const dimensions = {
         width,
-        height: width * 0.6,
+        height: width * 0.65,
         margins: {
-            top: 10,
+            top: 0,
             bottom: 10,
             left: 10,
             right: 10
@@ -54,10 +54,11 @@ async function drawMap() {
     const bounds = wrapper.append("g")
         .style("transform", `translate(${dimensions.margins.left}px, ${dimensions.margins.top}px)`)
 
-    const color = d3.scaleLinear()
+    // Create color scale
+    const colors = d3.scaleLinear()
         .domain(d3.extent(newData, vacAccessor))
-        .range(['#CFDBE3', '#3D6E90'])
-
+        .interpolate(d3.interpolateHcl)
+        .range([d3.rgb("#ECF1F4"), d3.rgb('#3D6E90')])
     
     // Create projections and scale ------USE AGAIN IN OTHER PROJECTS
     let projection = d3.geoEqualEarth().scale(1).translate([0, 0]).precision(0);
@@ -72,7 +73,6 @@ async function drawMap() {
       ];
       projection.scale(scale).translate(transl);    
 
-      console.log(projection([20, 40]))
     
     // Create number formatter for tooltip
     let numberFormatter = d3.format(",.4r") 
@@ -85,11 +85,10 @@ async function drawMap() {
             if (d.location == undefined) {
                 return `<p class="no-data"><strong>No Data</p></strong>`
             } else {
-                return `<p id="geo-name"><strong>${d.location}</strong></p><p class="figures">${d.location} has administered <strong>${numberFormatter(d.total_vaccinations)}</strong> doses, <br>covering <strong>${d.total_vaccinations_per_hundred}%</strong> of the country's population.</strong></p>`
+                return `<p id="geo-name"><strong>${d.location}</strong></p><p class="figures">${d.location} has administered <strong>${numberFormatter(d.people_vaccinated)}</strong> doses, <br>covering <strong>${d.total_vaccinations_per_hundred}%</strong> of the country's population.</strong></p>`
             } 
         })
     bounds.call(tip)
-
 
     // Draw map
     const map = bounds.selectAll("path")
@@ -111,15 +110,60 @@ async function drawMap() {
         .merge(map)
             .attr("fill", d => {
                 if (d.total_vaccinations_per_hundred !== undefined) {
-                    return  color(vacAccessor(d))
+                    return  colors(vacAccessor(d))
                 } else {
                     return "#cecfc8"
                 }
                 
             }) 
 
+    // Create legend
+    // const legend = d3.select('#map-legend').append("svg")
+    const legend = bounds.append('g')
+            .attr("height", 60)
+            .attr("width", dimensions.boundedWidth)
+
+    const legendInner = legend.append('g')
+            .attr("class", 'legend')
+            .style('transform', `translate(${dimensions.boundedWidth / 3}px, 15px`)
+
+    // const legendText = legendInner.append('text')
+    const legendText = legendInner.append('text')
+            .attr("y", -2)
+            .attr("x", 130)
+            .text("Number of doses per 100 people")
+
+    colors.ticks().forEach((color, i) => {
+        const legendItem = legendInner.append('g')
+            .attr("transform", `translate(${i * 70}, 5)`)
+
+        legendItem.append('rect')
+            .attr("height", 8)
+            .attr("width", 70)
+            .attr("fill", () => {
+                while (i < colors.ticks().length) {
+                return colors(colors.ticks()[i])
+                i ++
+                }
+            })
+
+        legendItem.append("text")
+            .attr("class", "legend-ticks")
+            .attr("x", i + 70)
+            .attr("y", 25)
+            .attr("text-anchor", 'middle')
+            .text(() => {
+                while (i < colors.ticks().length -1) {
+                    return colors.ticks()[i]
+                    i ++
+                }
+            } ) 
+    })
+
+
+    // Create labels
     const countries = ['United States', 'China', 'Brazil', 'Russia', 'Australia',
-        'Algeria', 'India', 'Angola', 'Iran']
+        'Algeria', 'India', 'Angola', 'Iran', 'Sudan', 'Greenland']
         
     const labels = bounds.selectAll('text')
         .data(newData)
@@ -134,18 +178,18 @@ async function drawMap() {
                     }
                 })
                 .attr("y", function(d){
-                        return  path.centroid(d)[1] + 10;
+                        return  path.centroid(d)[1] + 5;
                 })
                 .attr("text-anchor", "middle")
-                // .text(d => {
-                //     if (countries.includes(d.location)) {
-                //         return d.location
-                //     } else {
-                //         return ""
-                //     }
-                // })
-            
-        console.log(newData[0])
+                .text(d => {
+                    if (countries.includes(d.location)) {
+                            return d.location
+                        
+                    } else {
+                        return ""
+                    }
+                })
+        
 }
 
 drawMap()

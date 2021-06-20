@@ -15,7 +15,7 @@ h1 {
   font-weight: 300;
   margin-left: 10%;
   margin-right: 10%;
-  margin-bottom: 0;
+  margin-bottom: 30px;
   color: rgb(80, 80, 80);
   line-height: 1;
 }
@@ -61,4 +61,17 @@ h1 {
   padding-bottom: 0px;
   margin-bottom: 0;
   margin-top: 0;
+}
+
+#map-legend {
+  padding-top: 30px;
+}
+
+.legend {
+  font-family: "Lato";
+  font-size: 16px;
+}
+
+.legend-ticks {
+  font-size: 13px;
 }
