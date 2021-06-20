@@ -13,11 +13,9 @@ async function drawMap() {
             if (location == country) {
                 parsedData[j] = Object.assign({}, parsedData[j], countryVac[i])
                 break;
-        }
-
+            }
         }
     }
-
     // Create accessor function
     const vacAccessor = d => d.total_vaccinations_per_hundred
     
@@ -73,6 +71,8 @@ async function drawMap() {
         (dimensions.boundedHeight - scale * (bound[1][1] + bound[0][1])) / 2
       ];
       projection.scale(scale).translate(transl);    
+
+      console.log(projection([20, 40]))
     
     // Create number formatter for tooltip
     let numberFormatter = d3.format(",.4r") 
@@ -80,14 +80,16 @@ async function drawMap() {
     // Tooltips
     const tip = d3.tip()
         .attr("class", "d3-tip")
+        .offset([-10, -10])
         .html(d => {
             if (d.location == undefined) {
-                return 'No Data'
+                return `<p class="no-data"><strong>No Data</p></strong>`
             } else {
                 return `<p id="geo-name"><strong>${d.location}</strong></p><p class="figures">${d.location} has administered <strong>${numberFormatter(d.total_vaccinations)}</strong> doses, <br>covering <strong>${d.total_vaccinations_per_hundred}%</strong> of the country's population.</strong></p>`
             } 
         })
     bounds.call(tip)
+
 
     // Draw map
     const map = bounds.selectAll("path")
@@ -100,8 +102,12 @@ async function drawMap() {
         .attr("d", path)
         .attr("stroke", "white")
         .attr("stroke-width", "1px")
-        .on("mouseover", tip.show)
-        .on("mouseleave", tip.hide)
+        .on('mouseover', function (d) {
+            tip.show(d)
+        })
+        .on("mouseleave", function(d) {
+            tip.hide(d)
+        })
         .merge(map)
             .attr("fill", d => {
                 if (d.total_vaccinations_per_hundred !== undefined) {
