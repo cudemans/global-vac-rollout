@@ -24,7 +24,7 @@ h1 {
   font-family: "Lato";
   font-size: 13px;
   fill: rgb(80, 80, 80);
-  stroke: "white";
+  text-shadow: 0 0 3px #ffffff, 0 0 4px #f7f7f8;
 }
 
 #geo-name {
@@ -35,7 +35,7 @@ h1 {
   padding-top: 0;
   padding-bottom: 0px;
   font-size: 20px;
-  line-height: 0.3;
+  line-height: 1;
   font-weight: 400;
 }
 
@@ -70,8 +70,15 @@ h1 {
 .legend {
   font-family: "Lato";
   font-size: 16px;
+  font-weight: 300;
 }
 
 .legend-ticks {
   font-size: 13px;
+}
+
+#tooltip {
+  position: absolute;
+  display: none;
+  border: solid 1px #000000;
 }
