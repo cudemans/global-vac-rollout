@@ -4,6 +4,8 @@ async function drawMap() {
     const geoData = await d3.json('data/country-shapes.json')
     let parsedData = topojson.feature(geoData, geoData.objects.countries).features
 
+    const jsonData = await d3.json('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
+
     const countryVac = await d3.json('https://raw.githubusercontent.com/simprisms/global_vac_data/main/data/last_vac2.json')
     
     // Combine datasets
@@ -26,6 +28,8 @@ async function drawMap() {
     const newData = parsedData.filter(d => {
         return d.id !== "010"
     })
+
+    console.log(newData[0])
 
     // Set dimensions
     const width = window.innerWidth 
@@ -81,21 +85,6 @@ async function drawMap() {
     // Create number formatter for tooltip
     let numberFormatter = d3.format(",.4r") 
 
-
-    // Create tooltip 
-    // const showToolTip = (text, coords) => {
-    //     d3.select('#tooltip').text(text)
-    //         .style('top', projection(coords[1]))
-    //         .style('left', projection(coords[0]))
-    //         .style('display', 'block')
-    // }
-
-    // const hideToolTip = (text, coords) => {
-    //     d3.select('#tooltip').text(text)
-    //         .style('display', 'none')
-    // }
-
-
     // Tooltip
     const tip = d3.tip()
         .attr("class", "d3-tip")
@@ -104,7 +93,7 @@ async function drawMap() {
             if (d.location == undefined) {
                 return null
             } else {
-                return `<p id="geo-name"><strong>${d.location}</strong></p><p class="figures">${d.location} has administered <strong>${numberFormatter(d.people_vaccinated)}</strong> doses, <br>covering <strong>${d.total_vaccinations_per_hundred}%</strong> of the country's population.</strong></p>`
+                return `<p class="geo-name"><strong>${d.location}</strong></p><p class="figures">${d.location} has administered <strong>${numberFormatter(d.people_vaccinated)}</strong> doses. <br>The country has fully vaccinated <strong>${d.people_fully_vaccinated_per_hundred}%</strong> of its population.</strong></p>`
             } 
         })
     bounds.call(tip)
@@ -122,9 +111,6 @@ async function drawMap() {
         .attr("stroke-width", "1px")
         .on('mouseover', d => d.location == undefined ? tip.hide(d) : tip.show(d))
         .on("mouseleave", d => tip.hide(d))
-        // .on("mouseover", d => showToolTip(d.location, [d3.event.clientX, d3.event.clientY]))
-        // .on('mousemove', d => showToolTip(d.location, [d3.event.clientX, d3.event.clientY]))
-        // .on("mouseover", hideToolTip)
         .merge(map)
             .attr("fill", d => d.total_vaccinations_per_hundred !== undefined ? colors(vacAccessor(d)) : "#cecfc8")
     
@@ -188,3 +174,22 @@ async function drawMap() {
 }
 
 drawMap()
+
+// Experiments
+
+// Create tooltip 
+    // const showToolTip = (text, coords) => {
+    //     d3.select('#tooltip').text(text)
+    //         .style('top', projection(coords[1]))
+    //         .style('left', projection(coords[0]))
+    //         .style('display', 'block')
+    // }
+
+    // const hideToolTip = (text, coords) => {
+    //     d3.select('#tooltip').text(text)
+    //         .style('display', 'none')
+    // }
+
+    // .on("mouseover", d => showToolTip(d.location, [d3.event.clientX, d3.event.clientY]))
+        // .on('mousemove', d => showToolTip(d.location, [d3.event.clientX, d3.event.clientY]))
+        // .on("mouseover", hideToolTip)

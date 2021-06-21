@@ -27,7 +27,7 @@ h1 {
   text-shadow: 0 0 3px #ffffff, 0 0 4px #f7f7f8;
 }
 
-#geo-name {
+.geo-name {
   font-family: "Lato";
   color: rgb(104, 104, 104);
   margin: 0;
@@ -81,4 +81,16 @@ h1 {
   position: absolute;
   display: none;
   border: solid 1px #000000;
+}
+
+#chart {
+  width: 100%;
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.circles:hover {
+  stroke: rgb(24, 24, 24);
+  stroke-width: 2px;
+  opacity: 1;
 }
