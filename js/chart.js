@@ -1,34 +1,25 @@
 async function plotChart() {
+
     let data = await d3.csv('Processing/chart.csv').then(data => {
         data.forEach(d => {
             d.Population = Number(d.Population)
             d.GDPpc = Number(d.GDPpc)
             d.total_vaccinations_per_hundred = Number(d.total_vaccinations_per_hundred)
         })
-
         return data
     })
 
     const filteredData = data.filter(d => {
-        return d.location !== 'World'
-    }).filter(d => {
-        return d.location !== 'Upper middle income'
-    }).filter(d => {
-        return d.location !== 'Lower middle income'
-    }).filter(d => {
-        return d.location !== 'Low income'
-    }).filter(d => {
-        return d.location !== 'High income'
-    }).filter(d => {
-        return d.location !== 'European Union'
-    }).filter(d => {
-        return d.location !== 'North America'
-    }).filter(d => {
-        return d.location !== 'South America'
-    }).filter(d => {
-        return d.location !== 'Gibraltar'
-    }).filter(d => {
-        return d.location !== 'British Virgin Islands'
+        return d.location !== "World" &&
+            d.location !== 'Upper middle income' &&
+            d.location !== 'Lower middle income' &&
+            d.location !== 'Low income' &&
+            d.location !== 'High income' &&
+            d.location !== 'European Union' &&
+            d.location !== 'North America' &&
+            d.location !== 'South America' &&
+            d.location !== 'Gibraltar' &&
+            d.location !== 'British Virgin Islands'
     })
 
     // Create accessor function 
@@ -37,7 +28,7 @@ async function plotChart() {
     const sizeAccessor = d => d.Population
 
     // Set dimensions
-    const width = 800 //d3.min([window.innerWidth * 0.8, window.innerHeight * 0.8])
+    const width = 750
     const dimensions = {
         width,
         height: width,
@@ -68,7 +59,7 @@ async function plotChart() {
     // Create chart background
     bounds.append("rect")
         .attr("height", dimensions.boundedHeight)
-        .attr("width", dimensions.boundedWidth + 5)
+        .attr("width", dimensions.boundedWidth)
         .attr("opacity", "0.5")
         .attr("fill", "#f5f3f3")
 
@@ -96,8 +87,9 @@ async function plotChart() {
     // Create tooltip
     const chartTip = d3.tip()
         .attr("class", "d3-tip")
+        .offset([-10, 0])
         .html(d => {
-            return `<p class="geo">${d.location}</p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Vaccinations per 100 people:&nbsp;&nbsp;&nbsp;<strong>${d.total_vaccinations_per_hundred}</strong></p><p class="figures">GDP per capita:&nbsp;&nbsp;&nbsp;<strong>$${Math.trunc(d.GDPpc)}</strong></p>`
+            return `<p class="geo">${d.location}</p><p class="region"><strong>${d.Region}</strong></p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Vaccinations per 100 people:&nbsp;&nbsp;&nbsp;<strong>${d.total_vaccinations_per_hundred}</strong></p><p class="figures">GDP per capita:&nbsp;&nbsp;&nbsp;<strong>$${Math.trunc(d.GDPpc)}</strong></p>`
         })
     bounds.call(chartTip)
 
@@ -112,7 +104,7 @@ async function plotChart() {
         .attr("class", "circles")
         .attr("cx", d => xScale(xAccessor(d)))
         .attr("cy", d => yScale(yAccessor(d)))
-        .attr("r", d => Math.sqrt(2 * area(sizeAccessor(d)) / Math.PI))
+        .attr("r", d => Math.sqrt(1.5 * area(sizeAccessor(d)) / Math.PI))
         .attr("opacity", "0.7")
         .attr("fill", d => contcolor(d.IncomeGroup))
         .on("mouseover", chartTip.show)
@@ -121,7 +113,7 @@ async function plotChart() {
 
     // Country labels
     const countries = ['United States', 'China', "Burkina Faso", 'India',
-        'Nigeria', "Malawi", "Zambia", "Togo", "Monaco", "Somalia", "Australia", "Lesotho", "Japan", "United Kingdom", "Gabon", "Thailand", "Mongolia"]
+        'Nigeria', "Malawi", "Zambia", "Togo", "Monaco", "Somalia", "Australia", "Lesotho", "Japan", "United Kingdom", "Gabon", "Thailand", "Mongolia", "Chad", "Philippines", "Mali"]
 
     const labels = bounds.selectAll('text')
         .data(filteredData)
@@ -141,7 +133,7 @@ async function plotChart() {
         })
         .attr("y", d => {
             if (d.location == "India") {
-                return yScale(yAccessor(d)) - 24
+                return yScale(yAccessor(d)) - 21
             } else if (d.location == "Togo") {
                 return yScale(yAccessor(d)) + 18
             } else if (d.location == "Japan") {
@@ -156,10 +148,12 @@ async function plotChart() {
                 return yScale(yAccessor(d)) + 4
             } else if (d.location == "Lesotho") {
                 return yScale(yAccessor(d)) - 10
+            } else if (d.location == "Philippines") {
+                return yScale(yAccessor(d)) + 18
             } else if (d.location == "China") {
                 return yScale(yAccessor(d)) + 20
             } else {
-                return yScale(yAccessor(d)) - 12
+                return yScale(yAccessor(d)) - 10
             }
         })
         .attr("text-anchor", 'middle')
@@ -223,9 +217,7 @@ async function plotChart() {
 
     // Create axes
     const xAxisGenerator = d3.axisBottom(xScale)
-        // .tickSize(-dimensions.boundedHeight + yScale(100000))
         .tickValues([0.1, 1, 10, 100])
-        // .tickFormat(d3.format(".3"))
         .tickArguments([5, ".3"])
         .tickSizeOuter(0)
 

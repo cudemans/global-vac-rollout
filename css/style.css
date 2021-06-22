@@ -95,15 +95,9 @@ h3 {
   border: solid 1px #000000;
 }
 
-#chart {
-  /* width: 90%; */
-  /* margin: 10%; */
-  align-items: center;
-}
-
 .circles:hover {
   stroke: rgb(24, 24, 24);
-  stroke-width: 2px;
+  stroke-width: 1px;
   opacity: 1;
 }
 
@@ -142,6 +136,16 @@ h3 {
   font-style: italic;
 }
 
-#thing {
-  color: #f3eded;
+
+.region {
+  font-family: "Lato";
+  color: rgb(104, 104, 104);
+  padding-top: 2px;
+  line-height: 1;
+  font-size: 13px;
+  font-weight: 300;
+  padding-bottom: 4px;
+  margin-bottom: 0;
+  margin-top: 1;
+  font-style: bold;
 }
