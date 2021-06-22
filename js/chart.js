@@ -32,19 +32,19 @@ async function plotChart() {
     })
 
     console.log(filteredData[0])
-    
+
     // Create accessor function 
     const xAccessor = d => d.total_vaccinations_per_hundred
     const yAccessor = d => d.GDPpc
     const sizeAccessor = d => d.Population
 
     // Set dimensions
-    const width = 650 //d3.min([window.innerWidth * 0.8, window.innerHeight * 0.8])
+    const width = 750 //d3.min([window.innerWidth * 0.8, window.innerHeight * 0.8])
     const dimensions = {
         width, 
         height: width ,
         margins: {
-            top: 30, 
+            top: 60, 
             right: 30, 
             left: 40,
             bottom: 40
@@ -93,7 +93,7 @@ async function plotChart() {
     const chartTip = d3.tip()   
         .attr("class", "d3-tip")
         .html(d => {
-            return `<p class="geo-name">${d.location}</p><p>${d.GDPpc}</p><p>${d.total_vaccinations_per_hundred}</p><p>${d.IncomeGroup}</p>`})
+            return `<p id="geo">${d.location}</p><p id="income">${d.IncomeGroup}</p><p class="figures">Vaccinations per 100 people:&nbsp;&nbsp;&nbsp;<strong>${d.total_vaccinations_per_hundred}</strong></p><p class="figures">GDP per capita:&nbsp;&nbsp;&nbsp;<strong>$${Math.trunc(d.GDPpc)}</strong></p>`})
     bounds.call(chartTip)
 
     // Draw data
@@ -116,7 +116,7 @@ async function plotChart() {
     
     
     const countries = ['United States', 'China', "Burkina Faso", 'India', 
-        'Nigeria', "Malawi", "Zambia", "Togo", "Monaco", "Somalia", "Australia",  "Lesotho", "Japan", "United Kingdom"]
+        'Nigeria', "Malawi", "Zambia", "Togo", "Monaco", "Somalia", "Australia",  "Lesotho", "Japan", "United Kingdom", "Gabon", "Thailand"]
 
     const labels = bounds.selectAll('text')
             .data(filteredData)
@@ -231,15 +231,37 @@ async function plotChart() {
         .attr("class", "axis")
         .style("transform", `translateY(${dimensions.boundedHeight}px)`)
         .call(xAxisGenerator)
-           
+
+    // x axis labels
+    const xLabel = xAxis.append("text")
+        .attr("x", dimensions.boundedWidth)
+        .attr("y", 30)
+        .attr("fill", "black")
+        .attr("font-size", "12px")
+        .attr("text-anchor", "end")
+        .text("Vaccinations per 100 people")
+
+    
+
     const yAxisGenerator = d3.axisLeft(yScale)
         // .tickSize(-dimensions.boundedWidth)
         .tickArguments([5,".1s"])
         .tickValues([1000, 10000, 100000])
         .tickSizeOuter(0)
+
     const yAxis = bounds.append('g')
         .attr("class", "axis")
         .call(yAxisGenerator)
+
+        // y axis label
+    const yLabel = yAxis.append("text")
+        .attr("x", -40)
+        .attr("y", -10)
+        .attr("fill", "black")
+        .attr("font-size", "12px")
+        .attr("text-anchor", "start")
+        .text("GDP per capita ($)")
+
 
     // Create legend
     console.log(_.uniq(filteredData.map(d => d.IncomeGroup)))

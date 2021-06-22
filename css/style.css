@@ -50,6 +50,7 @@ h1 {
   padding-bottom: 1px;
   margin-bottom: 0;
   margin-top: 1;
+  font-style: bold;
 }
 
 .no-data {
@@ -103,4 +104,30 @@ h1 {
 .labels {
   font-size: 12px;
   font-family: "Lato";
+}
+
+#geo {
+  font-family: "Lato";
+  color: rgb(104, 104, 104);
+  margin: 0;
+  margin-top: 2px;
+  padding-top: 0;
+  padding-bottom: 4px;
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 400;
+  font-style: bold;
+}
+
+#income {
+  font-family: "Lato";
+  color: rgb(104, 104, 104);
+  padding-top: 2px;
+  line-height: 1;
+  font-size: 13px;
+  font-weight: 300;
+  padding-bottom: 4px;
+  margin-bottom: 0;
+  margin-top: 1;
+  font-style: italic;
 }
