@@ -93,7 +93,7 @@ async function drawMap() {
             if (d.location == undefined) {
                 return null
             } else {
-                return `<p class="geo-name"><strong>${d.location}</strong></p><p class="figures">${d.location} has administered <strong>${numberFormatter(d.people_vaccinated)}</strong> doses. <br>The country has fully vaccinated <strong>${d.people_fully_vaccinated_per_hundred}%</strong> of its population.</strong></p>`
+                return `<p class="geo"><strong>${d.location}</strong></p><p class="figures">${d.location} has administered <strong>${numberFormatter(d.people_vaccinated)}</strong> doses. <br>The country has fully vaccinated <strong>${d.people_fully_vaccinated_per_hundred}%</strong> of its population.</strong></p>`
             } 
         })
     bounds.call(tip)

@@ -93,7 +93,7 @@ async function plotChart() {
     const chartTip = d3.tip()   
         .attr("class", "d3-tip")
         .html(d => {
-            return `<p id="geo">${d.location}</p><p id="income">${d.IncomeGroup}</p><p class="figures">Vaccinations per 100 people:&nbsp;&nbsp;&nbsp;<strong>${d.total_vaccinations_per_hundred}</strong></p><p class="figures">GDP per capita:&nbsp;&nbsp;&nbsp;<strong>$${Math.trunc(d.GDPpc)}</strong></p>`})
+            return `<p class="geo">${d.location}</p><p id="income">${d.IncomeGroup}</p><p class="figures">Vaccinations per 100 people:&nbsp;&nbsp;&nbsp;<strong>${d.total_vaccinations_per_hundred}</strong></p><p class="figures">GDP per capita:&nbsp;&nbsp;&nbsp;<strong>$${Math.trunc(d.GDPpc)}</strong></p>`})
     bounds.call(chartTip)
 
     // Draw data
