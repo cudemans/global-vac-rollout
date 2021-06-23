@@ -9,21 +9,6 @@ async function plotChart() {
         return data
     })
 
-    // Get totals for income brackets
-    const getTotals =(location) => {
-        const area = data.filter(d => {
-            return d.location === location
-        })
-        return Number(area[0].total_vaccinations)
-    }
-
-    const incomes = ["Low income", "Lower middle income", "Upper middle income", "High income", "World"]
-    
-  
-
-   
-
-
     // Filter data
     const filteredData = data.filter(d => {
         return d.location !== "World" &&
@@ -39,20 +24,23 @@ async function plotChart() {
             
     })
 
+    // Number formatter
+    const numFormatter = d3.format(",");
+
     // Create accessor function 
     const xAccessor = d => d.total_vaccinations_per_hundred
     const yAccessor = d => d.GDPpc
     const sizeAccessor = d => d.Population
 
     // Set dimensions
-    const width = 750
+    const width = window.innerWidth * 0.52
     const dimensions = {
         width,
         height: width,
         margins: {
             top: 60,
             right: 30,
-            left: 40,
+            left: 30,
             bottom: 40
         }
     }
@@ -68,7 +56,8 @@ async function plotChart() {
     const wrapper = d3.select("#chart").append('svg')
         .attr("width", dimensions.width)
         .attr("height", dimensions.height)
-
+        // .attr("viewBox", `0 0 ${dimensions.width - 150} ${dimensions.width -150}`)
+         
     // Create bounds
     const bounds = wrapper.append('g')
         .style("transform", `translate(${dimensions.margins.left}px, ${dimensions.margins.top}px)`)
@@ -106,7 +95,7 @@ async function plotChart() {
         .attr("class", "d3-tip")
         .offset([-10, 0])
         .html(d => {
-            return `<p class="geo">${d.location}</p><p class="region"><strong>${d.Region}</strong></p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Vaccinations per 100 people:&nbsp;&nbsp;&nbsp;<strong>${d.total_vaccinations_per_hundred}</strong></p><p class="figures">GDP per capita:&nbsp;&nbsp;&nbsp;<strong>$${Math.trunc(d.GDPpc)}</strong></p>`
+            return `<p class="geo">${d.location}</p><p class="region"><strong>${d.Region}</strong></p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Vaccinations per 100 people:&nbsp;&nbsp;&nbsp;<strong>${d.total_vaccinations_per_hundred}</strong></p><p class="figures">GDP per capita:&nbsp;&nbsp;&nbsp;<strong>$${numFormatter(Math.trunc(d.GDPpc))}</strong></p>`
         })
     bounds.call(chartTip)
 
@@ -122,6 +111,15 @@ async function plotChart() {
         .attr("cx", d => xScale(xAccessor(d)))
         .attr("cy", d => yScale(yAccessor(d)))
         .attr("r", d => Math.sqrt(1.5 * area(sizeAccessor(d)) / Math.PI))
+        .attr("r", d => {
+            if (window.innerWidth >= 1300) {
+                return Math.sqrt(1.5 * area(sizeAccessor(d)) / Math.PI)
+            } else if (window.innerWidth  > 800 & window.innerWidth  < 1299) {
+                return Math.sqrt(1 * area(sizeAccessor(d)) / Math.PI)
+            } else if (window.innerWidth  > 300 & window.innerWidth  < 800) {
+                return Math.sqrt(0.3 * area(sizeAccessor(d)) / Math.PI)
+            }
+        })
         .attr("opacity", "0.7")
         .attr("fill", d => contcolor(d.IncomeGroup))
         .on("mouseover", chartTip.show)
@@ -307,37 +305,10 @@ async function plotChart() {
         .attr("x", 0)
         .attr("y", -40)
         .text("Income group")
+
     
-
-    const totalData = await d3.json('https://raw.githubusercontent.com/simprisms/global_vac_data/main/data/last_vac2.json')
-   
-    const totalsFiltered = totalData.filter(d => {
-        return d.location !== "World" &&
-            d.location !== 'Upper middle income' &&
-            d.location !== 'Lower middle income' &&
-            d.location !== 'Low income' &&
-            d.location !== 'High income' &&
-            d.location !== 'European Union' &&
-            d.location !== 'North America' &&
-            d.location !== 'South America' &&
-            d.location !== 'Gibraltar' &&
-            d.location !== 'British Virgin Islands' &&
-            d.location !== 'Asia' &&
-            d.location !== 'Europe' &&
-            d.location !== 'Africa' &&
-            d.location !== 'Oceania' &&
-            d.location !== 'United Kingdom'
-
-    })
-   
-    const totals = _.pluck(totalsFiltered, 'total_vaccinations')
-    const tots = totals.reduce((first, next) => first + next)
-    console.log(tots)
-
-    const formatter = d3.format("0.3s")
-
-    // document.querySelector("#total_world").textContent = formatter(tots).replace(/G/," billion")
-
 }
 
 plotChart()
+
+window.addEventListener('resize', plotChart.render )

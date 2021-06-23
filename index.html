@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width" />
     <link rel="stylesheet" href="css/d3-tip.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
@@ -14,20 +14,35 @@
 
 <body>
     <h1 class="header">This is how the vaccine is being rolled out around the world</h1>
-    <span id="total_world"></span>
-    <div id="map"></div>
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3">
-                <h3>Poorer countries have come off second best in the race to vaccinate the world's
-                    population</h3>
+                <p class="update">Updated: June 23, 2021</p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 space-bottom">
+                <p class="text">Since the beginning of the year, more than <span class="highlight" id="total_world"></span> doses of COVID-19 vaccines have been administered around the globe. The shots are largely seen as a way to for countries around the globe to get back to normal after a year of recurring lockdowns.</p>
+                <p class="text">But the rollout has been unequal. Rich countries have vaccinated large swathes of their populations, while lower-income nations, largely in Africa and Asia, have been left scrambling for whatever shots they can get their hands on.</p>
+
             </div>
         </div>
     </div>
+    
+    <div id="map"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 space-bottom">
+                <p class="text">Low income countries, including Malawi and Somalia, make up <span id="low-pop"></span> of the world's population, yet have administered <span id="low-vac" class="highlight"></span> of the world's vaccines.</p>
+                <p class="text">Meanwhile, high income nations like the US, UK, and Japan encompass <span id="high-pop"></span> of the world's people, but have adminstered <span class="highlight"id="high-vac"></span> of the the total COVID-19 vaccines.</p>
+                <p class="text">But the rollout has been unequal. Rich countries have vaccinated large swathes of their populations, while lower-income nations, largely in Africa and Asia have been left scrambling for whateever shots they can acquire.<span id="low"></span></p>
+
+            </div>
+        </div>
    <div class="container">
         <div class="row">
             <div id="chart" class="col-md-6 offset-md-3"></div>
-        <!-- <div id="line" class="col-md-6 offset-md-3"></div> -->
         </div>
     </div>
 
@@ -49,6 +64,8 @@
     <script src="js/main.js"></script>
     <script src="js/chart.js"></script>
     <script src="js/line.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/dumbell.js"></script>
 </body>
 
 </html>

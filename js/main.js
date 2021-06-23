@@ -37,7 +37,7 @@ async function drawMap() {
         height: width * 0.65,
         margins: {
             top: 0,
-            bottom: 10,
+            bottom: 0,
             left: 10,
             right: 10
         }
