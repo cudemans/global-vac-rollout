@@ -121,39 +121,41 @@ async function plotChart() {
     labels.enter().append("text")
         .attr("class", "labels")
         .attr("x", d => {
-            if (d.location == "United States") {
-                return xScale(xAccessor(d)) + 30
-            } else if (d.location == "China") {
-                return xScale(xAccessor(d)) + 42
-            } else if (d.location == "United Kingdom") {
-                return xScale(xAccessor(d)) + 20
-            } else {
-                return xScale(xAccessor(d))
+            switch (d.location) {
+                case "United States":
+                    return xScale(xAccessor(d)) + 30
+                case "China":
+                    return xScale(xAccessor(d)) + 42
+                case "United Kingdom":
+                    return xScale(xAccessor(d)) + 20
+                default:
+                    return xScale(xAccessor(d))
             }
         })
         .attr("y", d => {
-            if (d.location == "India") {
-                return yScale(yAccessor(d)) - 21
-            } else if (d.location == "Togo") {
-                return yScale(yAccessor(d)) + 18
-            } else if (d.location == "Japan") {
-                return yScale(yAccessor(d)) + 19
-            } else if (d.location == "United Kingdom") {
-                return yScale(yAccessor(d)) + 19
-            } else if (d.location == "Malawi") {
-                return yScale(yAccessor(d)) + 20
-            } else if (d.location == "Nigeria") {
-                return yScale(yAccessor(d)) - 14
-            } else if (d.location == "United States") {
-                return yScale(yAccessor(d)) + 4
-            } else if (d.location == "Lesotho") {
-                return yScale(yAccessor(d)) - 10
-            } else if (d.location == "Philippines") {
-                return yScale(yAccessor(d)) + 18
-            } else if (d.location == "China") {
-                return yScale(yAccessor(d)) + 20
-            } else {
-                return yScale(yAccessor(d)) - 10
+            switch (d.location) {
+                case "India":
+                    return yScale(yAccessor(d)) - 21
+                case "Togo":
+                    return yScale(yAccessor(d)) + 18
+                case "Japan":
+                    return yScale(yAccessor(d)) + 19
+                case "United Kingdom":
+                    return yScale(yAccessor(d)) + 19
+                case "Malawi":
+                    return yScale(yAccessor(d)) + 20
+                case "Nigeria":
+                    return yScale(yAccessor(d)) - 14
+                case "United States":
+                    return yScale(yAccessor(d)) + 4
+                case "Lesotho":
+                    return yScale(yAccessor(d)) - 10
+                case "Philippines":
+                    return yScale(yAccessor(d)) + 18
+                case "China":
+                    return yScale(yAccessor(d)) + 20
+                default:
+                    return yScale(yAccessor(d)) - 10
             }
         })
         .attr("text-anchor", 'middle')
@@ -178,39 +180,43 @@ async function plotChart() {
         .attr("opacity", "0.5")
         .attr("stroke", d3.rgb(80, 80, 80))
         .attr("x1", d => {
-            if (d.location === "China") {
-                return xScale(xAccessor(d))
-            } else if (d.location == 'United States') {
-                return xScale(xAccessor(d)) - 3
-            } else if (d.location == 'United Kingdom') {
-                return xScale(xAccessor(d))
+            switch (d.location) {
+                case "China":
+                    return xScale(xAccessor(d))
+                case 'United States':
+                    return xScale(xAccessor(d)) - 3
+                case 'United Kingdom':
+                    return xScale(xAccessor(d))
             }
         })
         .attr("y1", d => {
-            if (d.location === "China") {
-                return yScale(d.GDPpc)
-            } else if (d.location == 'United States') {
-                return yScale(d.GDPpc)
-            } else if (d.location == 'United Kingdom') {
-                return yScale(yAccessor(d))
+            switch (d.location) {
+                case "China":
+                    return yScale(yAccessor(d))
+                case 'United States':
+                    return yScale(yAccessor(d))
+                case 'United Kingdom':
+                    return yScale(yAccessor(d))
             }
         })
         .attr("x2", d => {
-            if (d.location === "China") {
-                return xScale(xAccessor(d)) + 25
-            } else if (d.location == 'United States') {
-                return xScale(xAccessor(d)) + 20
-            } else if (d.location == 'United Kingdom') {
-                return xScale(xAccessor(d)) + 10
+            switch (d.location) {
+                case "China":
+                    return xScale(xAccessor(d)) + 25
+                case 'United States':
+                    return xScale(xAccessor(d)) + 20
+                case 'United Kingdom':
+                    return xScale(xAccessor(d)) + 10
             }
         })
         .attr("y2", d => {
-            if (d.location === "China") {
-                return yScale(yAccessor(d)) + 15
-            } else if (d.location == 'United States') {
-                return yScale(yAccessor(d))
-            } else if (d.location == 'United Kingdom') {
-                return yScale(yAccessor(d)) + 15
+            switch (d.location) {
+                case "China":
+                    return yScale(yAccessor(d)) + 15
+                case 'United States':
+                    return yScale(yAccessor(d))
+                case 'United Kingdom':
+                    return yScale(yAccessor(d)) + 15
             }
         })
         .attr("stroke", "black")
