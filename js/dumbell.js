@@ -58,19 +58,34 @@ async function drawDumbell() {
         d.location == "Germany" ||
         d.location == "United States" ||
         d.location == "United Kingdom" ||
-        d.location == "Singapore" ||
         d.location == "Italy" ||
         d.location == "Netherlands" ||
-        d.location == "Spain" ||
         d.location == "France" ||
         d.location == "Israel"
  
     })
 
+    const upMid = data.filter(d => d.IncomeGroup == "Upper middle")
+    
+    // China, south Africa, mexico
+    const upMidSel = upMid.filter(d => {
+      return d.location == "China" || 
+      d.location == "South Africa" ||
+      d.location == "Mexico"
+    })
+
+
+    const lowMid = data.filter(d => d.IncomeGroup == "Lower middle")
+    // Kenya Phillipines India
+    const lowMidSel = lowMid.filter(d => {
+      return d.location == "India" ||
+      d.location == "Kenya" ||
+      d.location == "Philippines"
+    })
+
+    const midFiltered = _.concat(upMidSel, lowMidSel) 
+
     const lowIncome = data.filter(d => d.IncomeGroup == 'Low')
-    console.log(lowIncome)
-    
-    
     const lowFiltered = lowIncome.filter(d => {
         return d.location !== "Tajikistan" && 
         d.location !== "Togo" &&
@@ -82,9 +97,12 @@ async function drawDumbell() {
         d.location !== "Malawi" &&
         d.location !== "Rwanda" &&
         d.location !== "Niger" &&
+        d.location !== "Madagascar" &&
+        d.location !== "Sierra Leone" &&
         d.location !== "Liberia"
     })
-   const lowHigh = _.concat(lowFiltered, highFiltered)
+   const lowMidFiltered = _.concat(lowFiltered, midFiltered)
+   const lowHigh = _.concat(lowMidFiltered, highFiltered)
 
    lowHigh.forEach(d => {
        d.GDPpc = +d.GDPpc
@@ -103,7 +121,7 @@ async function drawDumbell() {
        height: 600,
        margins: {
            top: 30,
-           right: 10,
+           right: 30,
            left: 130,
            bottom: 40
        }
@@ -123,13 +141,13 @@ async function drawDumbell() {
     const bounds = wrapper.append("g")
         .style("transform", `translate(${dimensions.margins.left}px, ${dimensions.margins.top}px)`)
 
-    const shadedBlock = bounds.append('rect')
-        .attr("x", 0)
-        .attr("y", dimensions.boundedHeight - 255)
-        .attr("width", dimensions.boundedWidth)
-        .attr("height", 255)
-        .attr("fill", "grey")
-        .attr("opacity", 0.03)
+    // const shadedBlock = bounds.append('rect')
+    //     .attr("x", 0)
+    //     .attr("y", dimensions.boundedHeight - 255)
+    //     .attr("width", dimensions.boundedWidth)
+    //     .attr("height", 255)
+    //     .attr("fill", "grey")
+    //     .attr("opacity", 0.03)
 
     const xScale = d3.scaleLog()
         .domain([0.0001, 15])
@@ -196,13 +214,7 @@ async function drawDumbell() {
         .attr("y1", 0)
         .attr("y2", 0)
         .attr("stroke", "black")
-        // .attr("stroke", d => {
-        //     if (xScale(d.total_vaccinations / worldVac * 100) > xScale(d.Population / worldPop * 100)) {
-        //         return "#3d6e90"
-        //     } else {
-        //         return "#c29174"
-        //     }
-        // })
+    
 
     // total vacs
     dumbbell.append("circle")
@@ -238,8 +250,8 @@ async function drawDumbell() {
             lineType : "none"
           },
           color: ["#3d6e90"],
-          x: 500,
-          y: 135,
+          x: 480,
+          y: 145,
           dy: 30,
           dx: 60
         }
@@ -268,8 +280,8 @@ async function drawDumbell() {
                 lineType : "none"
               },
               color: ["#c29174"],
-              x: 305,
-              y: 45,
+              x: 320,
+              y: 80,
               dy: 10,
               dx: -100
             }
@@ -283,7 +295,38 @@ async function drawDumbell() {
             .append("g")
             .attr("font-size", "12px")
             .call(makeAnnotationsLeft)
-      
+
+
+            const annotationsLabelHigh = [
+                {
+                  note: {
+                    label: "Income level",
+                  },
+                  connector: {
+                    end: "arrow",        
+                    type: "line",       
+                    points: 1,           
+                    lineType : "none"
+                  },
+                  color: ["grey"],
+                  x: dimensions.boundedWidth - 25,
+                  y: 25,
+                  dy: dimensions.boundedHeight - 45,
+                  dx: 0
+                }
+              ]
+              
+              // Add annotation to the chart
+              const makeAnnotationsLabelHigh = d3.annotation()
+                .annotations(annotationsLabelHigh)
+                .type(d3.annotationLabel)
+              bounds
+                .append("g")
+                .attr("class", "labelsAnno")
+                .style("stroke-dasharray", "5")
+                .attr("font-size", "11px")
+                .call(makeAnnotationsLabelHigh)
+
     // x Axis
     const xAxisGenerator = d3.axisBottom(xScale)
         .tickValues([0.001, 0.01, 0.1, 1, 10])
@@ -316,18 +359,7 @@ async function drawDumbell() {
         .call(yAxisGenerator)
         .call(g => g.select(".domain")
         .remove())
-
-    // const divideLine = bounds.append("line")
-    //       .attr("x1", 0)
-    //       .attr("y1", 265)
-    //       .attr("x2", dimensions.boundedWidth)
-    //       .attr("y2", 265)
-    //       .attr("stroke", "black")
-    //       .style("stroke-width", "0.5px")
-    //       .attr("stroke-dasharray", "5")
-    
         
-
    // --------------------------------
 
     // Low income

@@ -201,3 +201,11 @@ h3 {
 .country-name {
   opacity: 0.5;
 }
+
+.labelsAnno {
+  opacity: 0.9;
+}
+
+/* .labelsAnno path {
+  stroke-dasharray: 3;
+} */
