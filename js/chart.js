@@ -31,7 +31,7 @@ async function plotChart() {
     const xAccessor = d => d.total_vaccinations_per_hundred
     const yAccessor = d => d.GDPpc
     const sizeAccessor = d => d.Population
-
+    // const width = (window.innerWidth < 500) ? window.innterwidth : window.innerWidth * 0.52
     // Set dimensions
     const width = window.innerWidth * 0.52
     const dimensions = {
@@ -285,6 +285,7 @@ async function plotChart() {
     let totalWidth = 0
 
     legend.enter().append("text")
+        .attr("class", "legendText")
         .attr("x", 120)
         .attr("y", -40)
         .attr("font-weight", "600")
@@ -297,6 +298,7 @@ async function plotChart() {
             totalWidth += current.node().getBBox().width + 15;
         })
         .attr("fill", d => contcolor(d))
+    
 
     bounds.append("text")
         .attr("font-weight", "600")

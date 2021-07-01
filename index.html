@@ -18,13 +18,14 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <p class="update">Updated: June 23, 2021</p>
+            </div>
         </div>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3 space-bottom">
-                <p class="text">Since the beginning of the year, more than <span class="highlight" id="total_world"></span> doses of COVID-19 vaccines have been administered around the globe. The shots are largely seen as a way to for countries around the globe to get back to normal after a year of recurring lockdowns.</p>
-                <p class="text">But the rollout has been unequal. Rich countries have vaccinated large swathes of their populations, while lower-income nations, largely in Africa and Asia, have been left scrambling for whatever shots they can get their hands on.</p>
+                <p class="text">Since the beginning of the year, more than <span class="highlight" id="total_world"></span> doses of COVID-19 vaccines have been administered around the globe. The shots are largely seen as the most effective way to for countries worldwide to get back to normal after a year of recurring lockdowns.</p>
+                <p class="text">But the rollout has been unequal. Rich countries have vaccinated large swathes of their populations, while lower-income nations, largely in Africa, the Middle East, and Asia, have been left scrambling for whatever shots they can get their hands on.</p>
 
             </div>
         </div>
@@ -34,17 +35,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6 offset-md-3 space-bottom">
-                <p class="text">Low income countries, including Malawi and Somalia, make up <span id="low-pop"></span> of the world's population, yet have administered <span id="low-vac" class="highlight"></span> of the world's vaccines.</p>
-                <p class="text">Meanwhile, high income nations like the US, UK, and Japan encompass <span id="high-pop"></span> of the world's people, but have adminstered <span class="highlight"id="high-vac"></span> of the the total COVID-19 vaccines.</p>
-                <p class="text">But the rollout has been unequal. Rich countries have vaccinated large swathes of their populations, while lower-income nations, largely in Africa and Asia have been left scrambling for whateever shots they can acquire.<span id="low"></span></p>
+                <p class="text">Low income countries, including Malawi and Somalia, make up <span id="low-pop"></span> of the world's population, yet have only administered <span id="low-vac" class="highlight"></span> of the world's vaccines.</p>
+                <p class="text">Meanwhile, high income nations like the US, UK, and Japan encompass <span id="high-pop"></span> of the world's people, but have adminstered <span class="highlight"id="high-vac"></span> of the the world's COVID-19 vaccines.</p>
 
             </div>
         </div>
+    <div>
    <div class="container">
         <div class="row">
             <div id="chart" class="col-md-6 offset-md-3"></div>
         </div>
     </div>
+    <!-- <div class="container">
+        <div class="row">
+            <div id="line" class="col-md-6 offset-md-3"></div>
+        </div>
+    </div> -->
+    <div id="dumbbell"></div>
+
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"
@@ -55,10 +63,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.0.0/d3.min.js"
         integrity="sha512-55FY9DHtfMBE2epZhXrWn78so/ZT5/GCLim66+L83U5LghiYwVBAEris4/13Iab9S8C9ShJp3LQL/2raiaO+0w=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js" integrity="sha512-ZuOjyqq409+q6uc49UiBF3fTeyRyP8Qs0Jf/7FxH5LfhqBMzrR5cwbpDA4BgzSo884w6q/+oNdIeHenOqhISGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"
         integrity="sha512-WFN04846sdKMIP5LKNphMaWzU7YpMyCU245etK3g/2ARYbPK9Ub18eG+ljU96qKRCWh+quCY7yefSmlkQw1ANQ=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.1/underscore-min.js" integrity="sha512-ZuOjyqq409+q6uc49UiBF3fTeyRyP8Qs0Jf/7FxH5LfhqBMzrR5cwbpDA4BgzSo884w6q/+oNdIeHenOqhISGw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-annotation/2.5.1/d3-annotation.min.js" integrity="sha512-iBAeBWWWFb8HqSBcrqcz98iIpuVH1la39dEYHtyQ/pGpeCQTQVvLJOWAuhv2Q7JSHp9k7hWA7sGxU3hHJe+tFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="js/d3-tip.js"></script>
     <script src="js/main.js"></script>

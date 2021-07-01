@@ -29,11 +29,13 @@ async function getData() {
 
     console.log(low)
 
-    document.querySelector("#low").textContent = numberFormat(low).replace(/M/, " million")
+    // document.querySelector("#low").textContent = numberFormat(low).replace(/M/, " million")
 
 
     // Get total world data
     const totalData = await d3.json('https://raw.githubusercontent.com/simprisms/global_vac_data/main/data/last_vac2.json')
+
+    console.log(totalData)
    
     const totalsFiltered = totalData.filter(d => {
         return d.location !== "World" &&
@@ -53,21 +55,17 @@ async function getData() {
             d.location !== 'United Kingdom'
 
     })
+
+    console.log(totalsFiltered)
    
     const totals = _.pluck(totalsFiltered, 'total_vaccinations')
     const tots = totals.reduce((first, next) => first + next)
-    console.log(tots)
+    console.log(totals)
 
     const formatter = d3.format("0.3s")
 
     //Assign to DOM elements
-    console.log(`Low: ${formatter(low).replace(/M/, " million")}`)
-    console.log(`Low mid: ${formatter(lowMid).replace(/M/, " million")}`)
-    console.log(`Up mid: ${formatter(upMid).replace(/G/, " billion")}`)
-    console.log(`High: ${formatter(high).replace(/M/, " million")}`)
-
-
-
+    
     document.querySelector("#total_world").textContent = formatter(tots).replace(/G/," billion")
 }
 

@@ -1,14 +1,23 @@
 async function plotLine() {
 
-    const data = await d3.csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv')
-
-    console.log(data)
-
-    // Define time parser
     const dateParser = d3.timeParse("%Y-%m-%d")
 
+    let data = await d3.csv('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv').then(data => {
+        data.forEach(d => {
+            d.total_vaccinations_per_hundred = Number(d.total_vaccinations_per_hundred)
+            d.people_vaccinated_per_hundred = Number(d.people_vaccinated_per_hundred)
+            d.date = dateParser(d.date)
+
+        })
+        return data
+    })
+
+   
+    const jsonData = await d3.json('https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.json')
+   
+    
     // Define accessor functions
-    const xAccessor = d => dateParser(d.date)
+    const xAccessor = d => d.date
     const yAccessor = d => d.people_vaccinated_per_hundred
 
     const width = 800
@@ -43,32 +52,39 @@ async function plotLine() {
         .domain(d3.extent(data, xAccessor))
         .range([0, dimensions.boundedWidth])
 
+        
+
     const yScale = d3.scaleLinear()
         .domain([0, d3.max(data, yAccessor)])
         .range([dimensions.boundedHeight, 0])
+    
+    console.log(jsonData)
 
     // Create nested data
     const nest = d3.nest()
-        .key(d => d.location)
-        .entries(data)
+        .key(d => d.country)
+        .entries(jsonData)
+
+    console.log(nest)
 
     const lineGenerator = d3.line()
-        .x(d => xScale(xAccessor(d)))
-        .y(d => yAccessor(yAccessor(d)))
+        .defined(d => d.people_vaccinated_per_hundred > 0)
+        .x(d => xScale(d =>d.date))
+        .y(d => yScale(d => d.people_vaccinated_per_hundred))
 
     const paths = bounded.selectAll("path")
         .data(nest)
 
     paths.exit().remove()
 
-    // paths.enter().append("path")
-    //     .attr("d", d => lineGenerator(d.values))
-
-
+    paths.enter().append("path")
+        .attr("d", d => lineGenerator(d.values))
 
    
 
-    console.log(nest)
+   
+
+  
 }
 
 plotLine()

@@ -182,3 +182,22 @@ h3 {
   margin-left: 21%;
   margin-right: 25%;
 }
+
+.legendText {
+  fill: black;
+}
+
+.line-between {
+  stroke-width: 2px;
+  stroke: rgb(204, 203, 203);
+}
+
+.line-before {
+  stroke-width: 0.5px;
+  stroke: #dfdede;
+  opacity: 0.7;
+}
+
+.country-name {
+  opacity: 0.5;
+}

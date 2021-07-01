@@ -170,6 +170,8 @@ async function drawMap() {
         .attr("text-anchor", "middle")
         .text(d => countries.includes(d.location) ? d.location : "")
 
+        console.log(newData)
+
 }
 
 drawMap()
