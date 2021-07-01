@@ -1,7 +1,7 @@
 async function drawDumbell() {
     const data = await d3.csv("./Processing/chart.csv")
 
-    console.log(data)
+    const numFormat = d3.format(".4f")
 
     const groups = ["Low income", "Lower middle income", "Upper middle income", "High income"]
     
@@ -141,18 +141,9 @@ async function drawDumbell() {
     const bounds = wrapper.append("g")
         .style("transform", `translate(${dimensions.margins.left}px, ${dimensions.margins.top}px)`)
 
-    // const shadedBlock = bounds.append('rect')
-    //     .attr("x", 0)
-    //     .attr("y", dimensions.boundedHeight - 255)
-    //     .attr("width", dimensions.boundedWidth)
-    //     .attr("height", 255)
-    //     .attr("fill", "grey")
-    //     .attr("opacity", 0.03)
-
     const xScale = d3.scaleLog()
         .domain([0.0001, 15])
         .range([0, dimensions.boundedWidth])
-        // .base(10)
         .nice()
 
     const yScale = d3.scalePoint()
@@ -162,7 +153,18 @@ async function drawDumbell() {
 
     const vacTip = d3.tip()
         .attr("class", "d3-tip")
-        .html(d => d.total_vaccinations)    
+        .html(d => {
+          return `<p>Share of world's vaccinations: ${numFormat(d.total_vaccinations / worldVac * 100)}</p>`})
+      bounds.append('g')
+        .call(vacTip)
+
+    const popTip = d3.tip()
+        .attr("class", "d3-tip")
+        .html(d => {
+          return `<p>Share of world's population: ${numFormat(d.Population / worldPop * 100)}</p>`}
+        )
+      bounds.append('g')
+        .call(popTip)
     
     const dumbbellGroup = bounds.append("g")
         .attr("id", "dumbbellGroup");
@@ -171,7 +173,8 @@ async function drawDumbell() {
         .data(lowHigh)
         .enter().append("g")
         .attr("class", "dumbbell")
-        .attr("transform", function(d) { return "translate(0," + yScale(d.location) + ")"; });
+        .attr("transform", function(d) { return "translate(0," + yScale(d.location) + ")"; })
+        
 
     // lines between dots
     dumbbell.append("line")
@@ -205,7 +208,6 @@ async function drawDumbell() {
         .attr("y1", 0)
         .attr("y2", 0);
     
-        
     // lines between dots
     dumbbell.append("line")
         .attr("class", "line-between")
@@ -215,7 +217,6 @@ async function drawDumbell() {
         .attr("y2", 0)
         .attr("stroke", "black")
     
-
     // total vacs
     dumbbell.append("circle")
         .attr("class", "circle current")
@@ -224,8 +225,9 @@ async function drawDumbell() {
         .attr("r", 5)
         .attr("fill", "#3d6e90")
         .on("mouseover", vacTip.show)
+        .on("mouseout", vacTip.hide)
         
-
+        
     // total population
     dumbbell.append("circle")
         .attr("class", "circle current")
@@ -233,6 +235,8 @@ async function drawDumbell() {
         .attr("cy", 0)
         .attr("r", 5)
         .attr("fill", "#c29174")
+        .on("mouseover", popTip.show)
+        .on("mouseout", popTip.hide)
 
     
     // Annotations
@@ -296,36 +300,21 @@ async function drawDumbell() {
             .attr("font-size", "12px")
             .call(makeAnnotationsLeft)
 
+          const lowIncomeLabel = bounds.append("text")
+            .attr("x", dimensions.boundedWidth)
+            .attr("y", dimensions.boundedHeight - 6)
+            .attr("font-size", "12px")
+            .attr("text-anchor", "end")
+            .attr("opacity", "0.6")
+            .text("Low income")
 
-            const annotationsLabelHigh = [
-                {
-                  note: {
-                    label: "Income level",
-                  },
-                  connector: {
-                    end: "arrow",        
-                    type: "line",       
-                    points: 1,           
-                    lineType : "none"
-                  },
-                  color: ["grey"],
-                  x: dimensions.boundedWidth - 25,
-                  y: 25,
-                  dy: dimensions.boundedHeight - 45,
-                  dx: 0
-                }
-              ]
-              
-              // Add annotation to the chart
-              const makeAnnotationsLabelHigh = d3.annotation()
-                .annotations(annotationsLabelHigh)
-                .type(d3.annotationLabel)
-              bounds
-                .append("g")
-                .attr("class", "labelsAnno")
-                .style("stroke-dasharray", "5")
-                .attr("font-size", "11px")
-                .call(makeAnnotationsLabelHigh)
+          const highIncomeLabel = bounds.append("text")
+            .attr("x", dimensions.boundedWidth)
+            .attr("y", 13)
+            .attr("font-size", "12px")
+            .attr("text-anchor", "end")
+            .attr("opacity", "0.6")
+            .text("High income")
 
     // x Axis
     const xAxisGenerator = d3.axisBottom(xScale)
