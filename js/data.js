@@ -35,7 +35,6 @@ async function getData() {
     // Get total world data
     const totalData = await d3.json('https://raw.githubusercontent.com/simprisms/global_vac_data/main/data/last_vac2.json')
 
-    console.log(totalData)
    
     const totalsFiltered = totalData.filter(d => {
         return d.location !== "World" &&
@@ -58,7 +57,7 @@ async function getData() {
 
     console.log(totalsFiltered)
    
-    const totals = _.pluck(totalsFiltered, 'total_vaccinations')
+    const totals = _.map(totalsFiltered, 'total_vaccinations')
     const tots = totals.reduce((first, next) => first + next)
     console.log(totals)
 

@@ -154,15 +154,14 @@ async function drawDumbell() {
     const vacTip = d3.tip()
         .attr("class", "d3-tip")
         .html(d => {
-          return `<p>Share of world's vaccinations: ${numFormat(d.total_vaccinations / worldVac * 100)}</p>`})
+          return `<p class="geo">${d.location}</p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Share of world's vaccinations: <strong>${numFormat(d.total_vaccinations / worldVac * 100)}%</strong></p>`})
       bounds.append('g')
         .call(vacTip)
 
     const popTip = d3.tip()
         .attr("class", "d3-tip")
         .html(d => {
-          return `<p>Share of world's population: ${numFormat(d.Population / worldPop * 100)}</p>`}
-        )
+          return `<p class="geo">${d.location}</p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Share of world's population: <strong>${numFormat(d.Population / worldPop * 100)}%</strong></p>`})
       bounds.append('g')
         .call(popTip)
     
