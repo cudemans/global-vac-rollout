@@ -10,6 +10,9 @@ async function getData() {
     })
 
     const numberFormat  = d3.format(".3s")
+    const dateParse = d3.timeParse("%Y-%m-%d")
+    const dateFormat = d3.timeFormat("%B %d, %Y")
+
 
     // Get totals for income brackets
     const getTotals =(location) => {
@@ -56,6 +59,15 @@ async function getData() {
     })
 
     console.log(totalsFiltered)
+
+    totalsFiltered.forEach(d => {
+        d.date = dateParse(d.date)
+        return d
+    })
+
+   let lastDate = d3.max(totalsFiltered, d => d.date)
+
+    
    
     const totals = _.map(totalsFiltered, 'total_vaccinations')
     const tots = totals.reduce((first, next) => first + next)
@@ -66,6 +78,8 @@ async function getData() {
     //Assign to DOM elements
     
     document.querySelector("#total_world").textContent = formatter(tots).replace(/G/," billion")
+
+    document.querySelector(".update").textContent = `Updated: ${dateFormat(lastDate)}`
 }
 
 getData()
