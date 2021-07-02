@@ -1,6 +1,6 @@
 async function getData() {
 
-    let data = await d3.csv('Processing/chart.csv').then(data => {
+    let data = await d3.csv('Processing/chart2.csv').then(data => {
         data.forEach(d => {
             d.Population = Number(d.Population)
             d.GDPpc = Number(d.GDPpc)
@@ -9,7 +9,6 @@ async function getData() {
         return data
     })
 
-    const numberFormat  = d3.format(".3s")
     const dateParse = d3.timeParse("%Y-%m-%d")
     const dateFormat = d3.timeFormat("%B %d, %Y")
 

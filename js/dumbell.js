@@ -1,5 +1,5 @@
 async function drawDumbell() {
-    const data = await d3.csv("./Processing/chart.csv")
+    const data = await d3.csv("./Processing/chart2.csv")
 
     const numFormat = d3.format(".4f")
 

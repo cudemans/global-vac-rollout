@@ -1,6 +1,6 @@
 async function plotChart() {
 
-    let data = await d3.csv('Processing/chart.csv').then(data => {
+    let data = await d3.csv('Processing/chart2.csv').then(data => {
         data.forEach(d => {
             d.Population = Number(d.Population)
             d.GDPpc = Number(d.GDPpc)
@@ -169,6 +169,8 @@ async function plotChart() {
                     return yScale(yAccessor(d)) + 18
                 case "China":
                     return yScale(yAccessor(d)) + 20
+                case "Chad":
+                    return yScale(yAccessor(d)) + 18
                 default:
                     return yScale(yAccessor(d)) - 10
             }
