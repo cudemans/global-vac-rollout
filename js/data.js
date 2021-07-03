@@ -10,7 +10,7 @@ async function getData() {
     })
 
     const dateParse = d3.timeParse("%Y-%m-%d")
-    const dateFormat = d3.timeFormat("%B %d, %Y")
+    const dateFormat = d3.timeFormat("%B %-d, %Y")
 
 
     // Get totals for income brackets
