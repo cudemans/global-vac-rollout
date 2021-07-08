@@ -330,7 +330,7 @@ async function drawDumbell() {
          .attr("text-anchor", "start")
          .attr("font-size", "15px")
          .attr("opacity", 0.6)
-         .text("Proportion of the world's population and vaccine rollout")
+         .text("Proportion of the world's population and vaccine rollout by country")
 
     // x Axis
     const xAxisGenerator = d3.axisBottom(xScale)
