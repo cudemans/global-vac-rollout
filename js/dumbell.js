@@ -321,7 +321,7 @@ async function drawDumbell() {
           .attr("y", -30)
           .attr("text-anchor", "start")
           .attr("font-size", "19px")
-          .text("Big discrepencies")
+          .text("Big discrepancies")
 
          // Title
          const subtitle = bounds.append("text")
