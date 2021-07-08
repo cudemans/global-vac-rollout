@@ -120,7 +120,7 @@ async function drawDumbell() {
        width,
        height: 600,
        margins: {
-           top: 30,
+           top: 45,
            right: 30,
            left: 130,
            bottom: 40
@@ -315,6 +315,23 @@ async function drawDumbell() {
             .attr("opacity", "0.6")
             .text("High income")
 
+        // Title
+        const title = bounds.append("text")
+          .attr("x", 0)
+          .attr("y", -30)
+          .attr("text-anchor", "start")
+          .attr("font-size", "19px")
+          .text("Big discrepencies")
+
+         // Title
+         const subtitle = bounds.append("text")
+         .attr("x", 0)
+         .attr("y", -10)
+         .attr("text-anchor", "start")
+         .attr("font-size", "15px")
+         .attr("opacity", 0.6)
+         .text("Proportion of the world's population and vaccine rollout")
+
     // x Axis
     const xAxisGenerator = d3.axisBottom(xScale)
         .tickValues([0.001, 0.01, 0.1, 1, 10])
@@ -350,6 +367,21 @@ async function drawDumbell() {
         
    // --------------------------------
 
+   // India shots percentage
+   const india = lowHigh.filter(d => {
+       return d.location == "India"
+   })
+
+   // US shots percentage
+   const unitedStates = lowHigh.filter(d => {
+    return d.location == "United States"
+})
+
+    const usVacProp = unitedStates[0].total_vaccinations / worldVac * 100
+    const indiaVacProp = india[0].total_vaccinations / worldVac * 100
+    
+   
+
     // Low income
     document.querySelector("#low-pop").textContent = `${popProp[0]}%`
     document.querySelector("#low-vac").textContent = `${vacProp[0].toFixed(2)}%`
@@ -360,6 +392,9 @@ async function drawDumbell() {
     console.log(`Proportion of vaccines: ${vacProp}`)
     console.log(` Proportion of world's pop: ${popProp}`)
 
+    // India. US to DOM
+    document.querySelector("#us-vac").textContent = `${usVacProp.toFixed(1)}%`
+    document.querySelector("#india-vac").textContent = `${indiaVacProp.toFixed(1)}%`
    
 }
 

@@ -38,7 +38,7 @@ async function plotChart() {
         width,
         height: width,
         margins: {
-            top: 60,
+            top: 90,
             right: 30,
             left: 30,
             bottom: 40
@@ -309,6 +309,14 @@ async function plotChart() {
         .attr("x", 0)
         .attr("y", -40)
         .text("Income group")
+
+    // Add header
+    bounds.append("text")
+        .attr("x", 0)
+        .attr("y", -70)
+        .attr("text-anchor", "start")
+        .attr("font-size", "19px")
+        .text("Rich countries come out on top")
 
     
 }
