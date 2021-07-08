@@ -239,6 +239,56 @@ async function drawDumbell() {
         .on("mouseover", popTip.show)
         .on("mouseout", popTip.hide)
 
+    // China annotations vac
+    dumbbell.append("text")
+        .attr("x", d => {
+            if (d.location == "China") {
+                return xScale(d.total_vaccinations / worldVac * 100) + 10
+            } else {
+                return null
+            }
+        })
+        .attr("y", d => {
+            if (d.location == "China") {
+                return 5
+            } else {
+                return null
+            }
+        })
+        .attr("text-anchor", "start")
+        .attr("font-size", "12px")
+        .attr("fill", "#3d6e90")
+        .text(d => {
+            if (d.location == "China") {
+                return `${(d.total_vaccinations / worldVac * 100).toFixed(1)}%`
+            }
+        })
+
+    // China annotations pop
+    dumbbell.append("text")
+        .attr("x", d => {
+            if (d.location == "China") {
+                return xScale(d.Population / worldPop * 100) - 10
+            } else {
+                return null
+            }
+        })
+        .attr("y", d => {
+            if (d.location == "China") {
+                return 5
+            } else {
+                return null
+            }
+        })
+        .attr("text-anchor", "end")
+        .attr("font-size", "12px")
+        .attr("fill", "#c29174")
+        .text(d => {
+            if (d.location == "China") {
+                return `${(d.Population / worldPop * 100).toFixed(1)}%`
+            }
+        })
+
     
     // Annotations
     const annotationsRight = [
