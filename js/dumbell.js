@@ -153,6 +153,7 @@ async function drawDumbell() {
 
     const vacTip = d3.tip()
         .attr("class", "d3-tip")
+        .offset([-10, 0])
         .html(d => {
           return `<p class="geo">${d.location}</p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Share of world's vaccinations: <strong>${numFormat(d.total_vaccinations / worldVac * 100)}%</strong></p>`})
       bounds.append('g')
@@ -160,6 +161,7 @@ async function drawDumbell() {
 
     const popTip = d3.tip()
         .attr("class", "d3-tip")
+        .offset([-10, 0])
         .html(d => {
           return `<p class="geo">${d.location}</p><p id="income">${d.IncomeGroup} income group</p><p class="figures">Share of world's population: <strong>${numFormat(d.Population / worldPop * 100)}%</strong></p>`})
       bounds.append('g')
@@ -218,7 +220,7 @@ async function drawDumbell() {
     
     // total vacs
     dumbbell.append("circle")
-        .attr("class", "circle current")
+        .attr("class", "circle-vac")
         .attr("cx", d => xScale(d.total_vaccinations / worldVac * 100))
         .attr("cy", 0)
         .attr("r", 5)
@@ -229,7 +231,7 @@ async function drawDumbell() {
         
     // total population
     dumbbell.append("circle")
-        .attr("class", "circle current")
+        .attr("class", "circle-pop")
         .attr("cx",  d =>  xScale(d.Population / worldPop * 100))
         .attr("cy", 0)
         .attr("r", 5)
@@ -330,7 +332,7 @@ async function drawDumbell() {
          .attr("text-anchor", "start")
          .attr("font-size", "15px")
          .attr("opacity", 0.6)
-         .text("Proportion of the world's population and vaccine rollout by country")
+         .text("Proportion of the world's population versus vaccine rollout by country")
 
     // x Axis
     const xAxisGenerator = d3.axisBottom(xScale)

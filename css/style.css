@@ -227,3 +227,13 @@ h3 {
   line-height: 1;
   font-weight: 400;
 }
+
+.circle-vac:hover {
+  stroke: rgb(24, 24, 24);
+  stroke-width: 1.5px;
+}
+
+.circle-pop:hover {
+  stroke: rgb(24, 24, 24);
+  stroke-width: 1.5px;
+}
