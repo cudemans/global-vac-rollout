@@ -237,3 +237,18 @@ h3 {
   stroke: rgb(24, 24, 24);
   stroke-width: 1.5px;
 }
+
+.data-credit {
+  font-family: "Lato";
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 300;
+  text-align: justify;
+  font-style: italic;
+  margin-left: 5px;
+  margin-top: 12px;
+}
+
+.data-box {
+  background-color: #e9e7e7;
+}

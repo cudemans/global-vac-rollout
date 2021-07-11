@@ -29,7 +29,7 @@ async function getData() {
 
     let [low, lowMid, upMid, high] = nums
 
-    console.log(low)
+    
 
     // document.querySelector("#low").textContent = numberFormat(low).replace(/M/, " million")
 
@@ -57,7 +57,7 @@ async function getData() {
 
     })
 
-    console.log(totalsFiltered)
+    
 
     totalsFiltered.forEach(d => {
         d.date = dateParse(d.date)
@@ -70,7 +70,7 @@ async function getData() {
    
     const totals = _.map(totalsFiltered, 'total_vaccinations')
     const tots = totals.reduce((first, next) => first + next)
-    console.log(totals)
+    
 
     const formatter = d3.format("0.3s")
 

@@ -58,14 +58,14 @@ async function plotLine() {
         .domain([0, d3.max(data, yAccessor)])
         .range([dimensions.boundedHeight, 0])
     
-    console.log(jsonData)
+    
 
     // Create nested data
     const nest = d3.nest()
         .key(d => d.country)
         .entries(jsonData)
 
-    console.log(nest)
+    
 
     const lineGenerator = d3.line()
         .defined(d => d.people_vaccinated_per_hundred > 0)

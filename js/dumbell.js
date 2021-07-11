@@ -110,7 +110,7 @@ async function drawDumbell() {
        d.total_vaccinations = +d.total_vaccinations
        return d
    })
-   console.log(lowHigh)
+   
 
    // --------------------------------
 
@@ -441,8 +441,7 @@ async function drawDumbell() {
     // High income
     document.querySelector("#high-pop").textContent = `${popProp[3]}%`
     document.querySelector("#high-vac").textContent = `${vacProp[3].toFixed(2)}%`
-    console.log(`Proportion of vaccines: ${vacProp}`)
-    console.log(` Proportion of world's pop: ${popProp}`)
+    
 
     // India. US to DOM
     document.querySelector("#us-vac").textContent = `${usVacProp.toFixed(1)}%`
